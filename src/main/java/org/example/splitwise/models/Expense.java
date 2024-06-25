@@ -3,6 +3,7 @@ package org.example.splitwise.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class Expense extends BaseModel {
     @Enumerated(EnumType.ORDINAL)
     private ExpenseType expenseType;
 
-    @OneToMany(mappedBy = "expense")
-    List<ExpenseUser> expenseUsers;
+    @OneToMany(mappedBy = "expense",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            fetch = FetchType.EAGER
+    )
+    List<ExpenseUser> expenseUsers = new ArrayList<>();
 }
